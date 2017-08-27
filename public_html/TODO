@@ -1,0 +1,15 @@
+
++Add Option for just credit 
++Add warning for region (WEBSITE RECURSION ONLY WORKS ACCURATELY IN UTC+5)
+
+*Update Settings page with default Credit
+*Update Settings and home pages with reset credit button
+
+
+
+SECURITY: 
+*BLOCK USER ACCESS TO cron jobs without fucking the job itself 
+
+
+
+
