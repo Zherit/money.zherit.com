@@ -42,6 +42,7 @@
 							<th>Type</th>
 							<th>Tax</th>
 							<th>Reason</th>
+							<th>Date</th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -52,12 +53,13 @@
 							<th>Type</th>
 							<th>Tax</th>
 							<th>Reason</th>
+							<th>Date</th>
 						</tr>
 					</tfoot>
 					
 				<tbody>	
 				<?php
-					$query = "SELECT username, uid, amount, cred_deb, tax, reason FROM log WHERE uid = " . $uid;
+					$query = "SELECT username, uid, amount, cred_deb, tax, reason, date FROM log WHERE uid = " . $uid;
 					$execute = $dbc->query($query);
 					
 					foreach($execute as $row) {
@@ -68,6 +70,7 @@
 						<td>".$row['cred_deb']."</td> 
 						<td>".$row['tax']."</td> 
 						<td>".$row['reason']."</td> 
+						<td>".$row['date']."</td>
 						
 						</tr>";
 					}

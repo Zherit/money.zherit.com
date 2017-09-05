@@ -177,12 +177,6 @@
 						<br /><br />
 					</div>
 					<div id = "lower">
-						<h3 class="title" >Reporting</h3>
-						<label class="switch">
-							<input type="checkbox" name = "report">
-							<span class="slider round"></span>
-						</label>
-						<br />
 						<br />
 						<input type="submit" name="debit" class="w3-button w3-teal w3-hover-green w3-round-xxlarge button" value = "Debit"  style = "float: right"/>
 						<input type="submit" name="credit" class="w3-button w3-teal w3-hover-green w3-round-xxlarge button" value="Credit" style="float: left"/>
@@ -202,12 +196,6 @@
 						<br /><br />
 					</div>
 					<div id = "lower">
-						<h3 class="title" >Reporting</h3>
-						<label class="switch">
-							<input type="checkbox" name = "report">
-							<span class="slider round"></span>
-						</label>
-						<br />
 						<br />
 						<input type="submit" name="debit" class="w3-button w3-teal w3-hover-green w3-round-xxlarge button" value = "Debit"  style = "float: center"/>
 						</div>

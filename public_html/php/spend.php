@@ -24,11 +24,6 @@
 	$row = $stmt->fetch();
 	
 	$type = null;
-	$report = "hidden";
-	
-	if($_POST['report']) {
-		$report = "text";
-	}
 	if($_POST['log']) {
 			$reason = $_POST['log'];
 		} else {
@@ -105,7 +100,7 @@
 		} else {
 			$ip=$_SERVER['REMOTE_ADDR'];
 		}
-		$query_2 = "INSERT INTO log (username, uid, amount, cred_deb, tax, reason , ip) VALUES (:username, :uid, :amount, :cred_deb, :tax, :reason , :ip)";
+		$query_2 = "INSERT INTO log (username, uid, amount, cred_deb, tax, reason, date, ip) VALUES (:username, :uid, :amount, :cred_deb, :tax, :reason, :date, :ip)";
 		$query_params_2 = array(
 								':username' => $_SESSION['user']['username'],
 								':uid' => $_SESSION['user']['id'],
@@ -113,7 +108,8 @@
 								':cred_deb' => $_POST['type'],
 								':tax' => $tax,
 								':reason' => $reason,
-								':ip' => $ip
+								':ip' => $ip,
+								':date' => date('d-m-y')
 							);
 		try {
 			$stmt3 = $dbc->prepare($query_2);
@@ -143,7 +139,7 @@
 			<br /><br />
 			<input type="number" step="0.01" name="spend" class="w3-input w3-border-0 w3-center w3-half" />
 			<br /><br />
-			<input type="<?php echo $report; ?>" name="log" class="w3-input w3-border-0 w3-center w3-half" placeholder="Purpose">
+			<input type="text" name="log" class="w3-input w3-border-0 w3-center w3-half" placeholder="Purpose">
 			<br /><br />
 			<input class="w3-radio" type="radio" name="tax" value="yes"><label>Tax</label>
 			<input class="w3-radio" type="radio" name="tax" value="no"><label>No Tax</label>
