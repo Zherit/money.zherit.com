@@ -39,7 +39,7 @@
 			if($_POST['type'] == 'debit') {
 				$query = 'UPDATE money SET day_ac = (day_ac - :money), week_ac = (week_ac - :money), month_ac = (month_ac - :money) WHERE id = :id';
 			} elseif($_POST['type'] == 'credit') {
-				if ($row['link'] == 1) {
+				if (1==1) {
 					$query = 'UPDATE money SET day_ac = (day_ac - :money), week_ac = (week_ac - :money), month_ac = (month_ac - :money), credit = (credit - :money)  WHERE id = :id';
 				} else {
 					$query = "UPDATE money SET credit = (credit - :money) WHERE id = :id";
@@ -51,7 +51,7 @@
 			if($_POST['type'] == 'debit') {
 				$query = 'UPDATE money SET money = (money - :money)  WHERE id = :id';
 			} elseif($_POST['type'] == 'credit') {
-				if ($row['link'] == 1) {
+				if (1==1) {
 					$query = 'UPDATE money SET money = (money - :money), credit = (credit - :money)  WHERE id = :id';
 				} else {
 					$query = "UPDATE money SET credit = (credit - :money) WHERE id = :id";

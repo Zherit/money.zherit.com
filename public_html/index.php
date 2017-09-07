@@ -206,7 +206,9 @@
 		?>
 	</div>
 		<div id="footer">
-			<a href='settings.php'>Settings</a> <a href='history.php'>History</a> <a href='reglog/logout.php'>Logout</a> 
+			<button onclick='javascript:window.location.replace("settings.php")' class="w3-button">Settings</button>
+			<button onclick='javascript:window.location.replace("history.php")' class="w3-button">History</button>
+			<button onclick='javascript:window.location.replace("reglog/logout.php")' class="w3-button">Logout</button>
 			
 <?php 
 	$query = "SELECT access_teir FROM users WHERE id = :id";
@@ -221,7 +223,7 @@
 	
 	if ($row['access_teir'] < 10) {
 	} else { 
-		print "<a href='administration/user_list.php'>Administrate</a>";
+		print "<button onclick='javascript:window.location.replace(\"administrat/list.php\")' class=\"w3-button w3-red\">Administrate</button>";
 	}
 ?>
 		</div>

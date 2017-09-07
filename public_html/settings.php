@@ -122,8 +122,6 @@
 							<br /><br />
 							<input type = "number" step="0.01" name = "credit" placeholder="Credit" />
 							<br /><br />
-							<p class="title_sub" >Link Credit & Spending</p>
-								<input type="checkbox" class='w3-check' name = "link" <?php echo $link ?>>
 							<p class="title_sub" >Use Credit</p>
 								<input type="checkbox" class='w3-check' name = "use_cred" <?php echo $use_cred ?>>
 						</div>
@@ -155,6 +153,7 @@
 					<br /><br /> -->
 					<input type="submit" />
 				</form>
+				<button onclick="javascript:window.location.replace('index.php');" class='w3-button'>Home</button>
 		</div>
 	
 	</body>
