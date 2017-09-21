@@ -135,7 +135,7 @@
 	</head>
 	<body>
 		<form class = "w3-container w3-light-grey w3-center w3-card-4" style="height:100%" action="spend.php" method="post">
-			<label class="w3-center w3-cell-middle">Ammount</label>
+			<label class="w3-center w3-cell-middle">Amount</label>
 			<br /><br />
 			<input type="number" step="0.01" name="spend" class="w3-input w3-border-0 w3-center w3-half" />
 			<br /><br />

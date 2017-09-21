@@ -34,7 +34,9 @@
 		<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js" > </script>
 		<script>
 		$(document).ready(function() {
-			$('#users').DataTable();
+			$('#users').DataTable({ 
+				paging: false
+			});
 		} );
 	</script>
 		

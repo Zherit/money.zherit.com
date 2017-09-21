@@ -66,6 +66,10 @@
 		$link = null;
 	}
 	
+	$act_q = "SELECT id, account_name FROM accounts WHERE uid = " . $_SESSION['user']['id'];
+	$act_e = $dbc->query($act_q);
+	
+	
 	?>
 	
 <html>
@@ -113,31 +117,33 @@
 					</div>
 					
 					
-					<h4><input type="button" onclick="toggle('creditinfo');" value = "Credit"></h4>
+					<h4><input type="button" onclick="toggle('creditinfo');" value = "Accounts"></h4>
 						<div id='creditinfo' style = 'display: none;' class = 'w3-card-4 w3-round setting'>
-							<label class="switch">
-								<input type="checkbox" name = "card">
-								<span class="slider round"></span>
-							</label>
-							<br /><br />
-							<input type = "number" step="0.01" name = "credit" placeholder="Credit" />
-							<br /><br />
-							<p class="title_sub" >Use Credit</p>
-								<input type="checkbox" class='w3-check' name = "use_cred" <?php echo $use_cred ?>>
+							<p class="title_sub" >Other Accounts</p>
+								<p>Accounts offers you the chance to add more accounts from which you can pull money.</p><p><a href='accounts.php'>Account settings</a></p>
+								<br /><br />
+								<a onclick='javascript:window.location = ("php/add_account.php")' class="w3-button w3-green">Add Account</a>
+								<br /><br />
+								<?php foreach ($act_e as $accounts) {
+										echo $accounts['account_name'] . " ::  <a onclick='javascript:window.location = (\"php/del_account.php?id=".$accounts['id']."\")'  class='w3-button w3-red'>Delete</a><br /><br />";
+								}
+								?>
+								
+								
 						</div>
 						
 					<h4><input type="button" onclick="toggle('recurs');" value = "Budgeting"></h4>
 						<div id='recurs' style = 'display: none;' class = 'w3-card-4  w3-round setting'>
 							<p>Budgeting replaces the default money shown on the home page and updates the day at 00:00, the Week on Monday, and the month on the 1st (all at 00:00).</p>
-							<input type = 'number' name = 'month_def' placeholder = "Monthly" />
+							<input type = 'number' step="0.01" name = 'month_def' placeholder = "Monthly" />
 							<br /><br />
-							<input type = 'number' name = 'week_def' placeholder = "Weekly" />
+							<input type = 'number' step="0.01" name = 'week_def' placeholder = "Weekly" />
 							<br /><br />
-							<input type = 'number' name = 'day_def' placeholder = "Daily" />
+							<input type = 'number' step="0.01" name = 'day_def' placeholder = "Daily" />
 							<br /><br />
-							<input type = 'number' name = 'warning_week' placeholder = "Low Week $ Warning" />
+							<input type = 'number' step="0.01" name = 'warning_week' placeholder = "Low Week $ Warning" />
 							<br /><br />
-							<input type = 'number' name = 'warning_month' placeholder = "Low Month $ Warning" />
+							<input type = 'number' step="0.01" name = 'warning_month' placeholder = "Low Month $ Warning" />
 							<br /><br />
 							
 							<p class="title_sub" >Use Budgeting</p>
@@ -153,7 +159,7 @@
 					<br /><br /> -->
 					<input type="submit" />
 				</form>
-				<button onclick="javascript:window.location.replace('index.php');" class='w3-button'>Home</button>
+				<button onclick="javascript:window.location = ('index.php');" class='w3-button'>Home</button>
 		</div>
 	
 	</body>

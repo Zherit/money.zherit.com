@@ -12,7 +12,7 @@
 ?>
 <html>
 	<head>
-		<title>History</title>
+		<title>Reports</title>
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 		<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 		<script src="//code.jquery.com/jquery-1.12.4.js"> </script>
@@ -28,9 +28,10 @@
 		
 	</head>
 	<body>
-		<div class="w3-card-4" style = "width: 800px; margin: auto; margin-top: 10px;">
+		<div class="w3-card-4" style = "width: 620px; margin: auto; margin-top: 10px;">
 			<div class='w3-container w3-blue'>
-				<h1>Transations for UID: <?php echo $uid; ?></h1>
+				<h1>Reports for UID: <?php echo $uid; ?></h1>
+				<button onclick="table.search('Daily'); draw();"	class='w3-button'>Daily</button><button onclick="table.search('Weekly'); draw();" class='w3-button'>Weekly</button><button onclick="table.search('Monthly'); draw();" class='w3-button'>Monthly</button>
 			</div>
 			<div class="w3-container" style = "text-align: left;">
 			
@@ -38,51 +39,37 @@
 				<table id = "users" class = "display" style="margin-bottom: 10px; margin-top: 10px;">
 					<thead>
 						<tr>
-							<th>Username</th>
-							<th>ID</th>
-							<th>Amount</th>
-							<th>Account</th>
-							<th>Tax</th>
-							<th>Reason</th>
+							<th>Type</th>
+							<th>$ Remaining</th>
+							<th>Alerts</th>
+							<th>Spent</th>
 							<th>Date</th>
-							<th>Undo</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
-							<th>Username</th>
-							<th>ID</th>
-							<th>Amount</th>
-							<th>Account</th>
-							<th>Tax</th>
-							<th>Reason</th>
+							<th>Type</th>
+							<th>$ Remaining</th>
+							<th>Alerts</th>
+							<th>Spent</th>
 							<th>Date</th>
-							<th>Undo</th>
 						</tr>
 					</tfoot>
 					
 				<tbody>	
 				<?php
-					$query = "SELECT username, uid, amount, cred_deb, tax, reason, date, id FROM log WHERE uid = " . $uid;
+					$query = "SELECT type, amount, alert, difference, date FROM reports WHERE uid = " . $uid;
 					$execute = $dbc->query($query);
 					
 					foreach($execute as $row) {
 						$row_serial = serialize($row);
 						
 						print "<tr>  
-						<td>".$row['username']."</td> 
-						<td>".$row['id']."</td> 
+						<td>".$row['type']."</td> 
 						<td>".$row['amount']."</td> 
-						<td>".$row['cred_deb']."</td> 
-						<td>".$row['tax']."</td> 
-						<td>".$row['reason']."</td> 
+						<td>".$row['alert']."</td> 
+						<td>".$row['difference']."</td> 
 						<td>".$row['date']."</td>
-						<td><form action='php/undo.php' method='post'>
-								<input type='hidden' name='therow' value='".$row_serial."'>
-								<input type='number' style='display:none;' name='trans_mon' value='".$row['amount']."'>
-								<button type='submit'>Undo</button>
-							</form>
-						</td>
 						
 						</tr>";
 					}
@@ -94,7 +81,7 @@
 		</div>
 		<br /><br />
 		<div class='w3-container w3-center'>
-				<button onclick="javascript:window.location = ('index.php');" class='w3-button'>Home</button>
+				<button onclick="javascript:window.location.replace('index.php');" class='w3-button'>Home</button>
 		</div>
 		
 	</body>

@@ -8,7 +8,10 @@
 		die("Redirecting to login");
 	} else {
 		$username = $_SESSION['user']['username'];
+		$uid = $_SESSION['user']['id'];
 	}
+	
+	
 	
 	$account = null;
 	
@@ -37,8 +40,7 @@
 	$row = $stmt->fetch();
 	
 	if ($row_c['first_login'] == 0) {
-		$account = "<div class='w3-panel w3-pale-red w3-leftbar w3-border-red w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`'
-  class='w3-button w3-green w3-panel w3-large w3-display-topright'>&times;</span><h3>Welcome</h3> <p>You are using this website for the first time, please visit <a href='settings.php'>SETTINGS</a> to set up your account.</div>";
+		$account = "<div class='w3-panel w3-pale-red w3-leftbar w3-border-red w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-green w3-panel w3-large w3-display-topright'>&times;</span><h3>Welcome</h3> <p>You are using this website for the first time, please visit <a href='settings.php'>SETTINGS</a> to set up your account.</div>";
 		$query = "UPDATE users SET first_login = 1 WHERE id = :id";
 		$query_params = array(':id' => $_SESSION['user']['id']);
 	
@@ -48,24 +50,23 @@
 		} catch(PDOException $ex) {
 			die("500 Server Error." . $ex);
 		}
+		
 	} else {
 		$account = null;
+		
 		if ($row['recurs'] == 1) {
 			$money = $row['day_ac'];
 			if ($row['day_ac'] <= 0) {
-				$account = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`'
-  class='w3-button w3-green w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are out of money for the day. The number displayed is your remaining for the week.</div>";
+				$account = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-green w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are out of money for the day. The number displayed is your remaining for the week.</div>";
 				$money = $row['week_ac'];
 			
 				if ($row['week_ac'] <= 0) {
-					$account = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`'
-  class='w3-button w3-amber w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are out of money for the week. The number displayed is your remaining for the month.</div>";
+					$account = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-amber w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are out of money for the week. The number displayed is your remaining for the month.</div>";
 					$money = $row['month_ac'];
 				
 					if ($row['month_ac'] <= 0) {
-						$account = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`'
-  class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are out of money for the month.</div>";
-					$money = $row['month_ac'];
+						$account = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are out of money for the month.</div>";
+						$money = $row['month_ac'];
 					}
 				
 				}
@@ -73,19 +74,16 @@
 			}
 		
 			if ($row['month_ac'] <= $row['warning_month']) {
-				$warning = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`'
-  class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are low on money for the month.</div>";
+				$warning = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are low on money for the month.</div>";
 			}
 			if ($row['week_ac'] <= $row['warning_week']) {
-				$warning = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`'
-  class='w3-button w3-amber w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are low on money for the week.</div>";
+				$warning = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-amber w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are low on money for the week.</div>";
 			} 
 		
 		} else {
 			$money = $row['money'];
 			if ($money <= 0) {
-				$account = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`'
-  class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are out of money. Adjust settings at <a href='settings.php'>SETTINGS</a></div>";
+				$account = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are out of money. Adjust settings at <a href='settings.php'>SETTINGS</a></div>";
 			}
 		}
 	}
@@ -131,13 +129,13 @@
 		$password = null;
 	}
 	
-	
-/*	if ($row['money'] == 0 && $row['credit'] == 0) {
-		$account = "<div class='w3-panel w3-red w3-card-4'> <span onclick='this.parentElement.style.display=`none`'
-  class='w3-button w3-red w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>Have you set up your account? <a href='settings.php'>Settings</a></p> </div>";
-		
-	} */
-	
+	$height = 300;
+		$ac_b = "SELECT account_name, amount FROM accounts WHERE uid = ". $uid;
+		$ac_a = $dbc->query($ac_b);
+						
+		foreach($ac_a as $ac_r) {
+			$height = $height + 160;
+		}
 	
 ?>
 <html>
@@ -151,7 +149,7 @@
 	<body>
 		<?php echo $account ?>
 		<?php echo $warning ?>
-<div id = 'con'>
+	<div style = "height: <?php echo $height; ?>px;"
 	<div id = 'content'>
 	<?php echo $password ?>
 		<?php
@@ -165,50 +163,60 @@
 			die("500 Server Error.");
 		}
 		$row = $stmt->fetch();
-		if ($row['use_cred'] == '1') {
-			echo '
-		<form action="php/spend.php" method="post">
-			<div id = "wrapper">
-				<div class = "content">
-					<div id = "upper">
-						<h3 class="title" > Money / Credit</h3>
-						<h1> ' . $money . '/' . $row["credit"] . ' </h1>
-						
-						<br /><br />
-					</div>
-					<div id = "lower">
-						<br />
-						<input type="submit" name="debit" class="w3-button w3-teal w3-hover-green w3-round-xxlarge button" value = "Debit"  style = "float: right"/>
-						<input type="submit" name="credit" class="w3-button w3-teal w3-hover-green w3-round-xxlarge button" value="Credit" style="float: left"/>
-						</div>
-					</div>
-			</div>
-		</form> ';
-		} else {
-			echo '
-		<form action="php/spend.php" method="post">
-			<div id = "wrapper">
-				<div class = "content">
-					<div id = "upper">
-						<h3 class="title" > Money</h3>
-						<h1> ' . $money . ' </h1>
-						
-						<br /><br />
-					</div>
-					<div id = "lower">
-						<br />
-						<input type="submit" name="debit" class="w3-button w3-teal w3-hover-green w3-round-xxlarge button" value = "Debit"  style = "float: center"/>
-						</div>
-					</div>
-			</div>
-		</form> ';
-		}
+		
+		
 		?>
+		<form action="php/spend_new.php">
+			<div id = "wrapper">
+				<div class = "content" >
+					<br /><br />	
+					<div class = "">
+						<input type="submit" name="debit" class="w3-button w3-teal w3-hover-green w3-round-xxlarge button" value = "Spend"  style = "float: center"/>
+					</div>
+					<br />
+					<div class = "">
+						<h3 class = "title"> Main Account </h3>
+						<h1>$<?php echo $money ?></h1>
+						<p></p>
+					</div>
+					<br />
+				
+					<?php
+						$ac_q = "SELECT account_name, amount, link_bud FROM accounts WHERE uid = ". $uid;
+						$ac_e = $dbc->query($ac_q);
+						
+						foreach($ac_e as $account) {
+							$linked = null;
+							if ($account['link_bud'] == 1) {
+								$linked = "Linked to primary account";
+							}
+							
+							echo "
+								<div class = 'box'>
+									<h3 class = 'title'>".$account['account_name']."</h3>
+									<h1>$".$account['amount']."<h1>
+									<p style = 'font-size: x-small;'>".$linked."</p>
+								</div>
+								<br />";
+			
+							
+						}
+					?>
+						
+						
+						
+				
+				</div>
+			</div>
+		</form>
 	</div>
-		<div id="footer">
-			<button onclick='javascript:window.location.replace("settings.php")' class="w3-button">Settings</button>
-			<button onclick='javascript:window.location.replace("history.php")' class="w3-button">History</button>
-			<button onclick='javascript:window.location.replace("reglog/logout.php")' class="w3-button">Logout</button>
+		<div style="text-align:center; position: relative; padding-top: 10px;">
+			<button onclick='javascript:window.location = ("settings.php")' class="w3-button">Settings</button>
+			<button onclick='javascript:window.location = ("history.php")' class="w3-button">History</button>
+			<button onclick='javascript:window.location = ("report.php")' class="w3-button">Reports</button>
+			<button onclick='javascript:window.location = ("accounts.php")' class="w3-button">Accounts</button>
+			<?php if($row['recurs'] == 1) { echo "<button onclick='javascript:window.location = (\"expanded.php\")' class=\"w3-button\">Budget</button>"; } ?>
+			<button onclick='javascript:window.location = ("reglog/logout.php")' class="w3-button">Logout</button>
 			
 <?php 
 	$query = "SELECT access_teir FROM users WHERE id = :id";
@@ -223,10 +231,12 @@
 	
 	if ($row['access_teir'] < 10) {
 	} else { 
-		print "<button onclick='javascript:window.location.replace(\"administrat/list.php\")' class=\"w3-button w3-red\">Administrate</button>";
+		print "<button onclick='javascript:window.location.replace(\"administration/user_list.php\")' class=\"w3-button w3-red\">Administrate</button>";
 	}
 ?>
+		<br /><br />
 		</div>
-</div>
+		</div>
+
 	</body>
 </html>
