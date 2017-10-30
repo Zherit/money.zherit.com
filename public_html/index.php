@@ -56,27 +56,25 @@
 		
 		if ($row['recurs'] == 1) {
 			$money = $row['day_ac'];
+			
 			if ($row['day_ac'] <= 0) {
 				$account = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-green w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are out of money for the day. The number displayed is your remaining for the week.</div>";
 				$money = $row['week_ac'];
-			
-				if ($row['week_ac'] <= 0) {
-					$account = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-amber w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are out of money for the week. The number displayed is your remaining for the month.</div>";
-					$money = $row['month_ac'];
-				
-					if ($row['month_ac'] <= 0) {
-						$account = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are out of money for the month.</div>";
-						$money = $row['month_ac'];
-					}
-				
-				}
-  
 			}
-		
-			if ($row['month_ac'] <= $row['warning_month']) {
+			if ($row['week_ac'] <= 0) {
+				$account = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-amber w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are out of money for the week. The number displayed is your remaining for the month.</div>";
+				$money = $row['month_ac'];	
+			}
+			if ($row['month_ac'] <= 0) {
+				$account = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are out of money for the month.</div>";
+				$money = $row['month_ac'];
+			}
+			
+			
+			if ($row['month_ac'] <= $row['warning_month'] && $row['month_ac'] > 0) {
 				$warning = "<div class='w3-panel w3-red w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-red w3-panel w3-large w3-display-topright'>&times;</span><h3>Alert!</h3> <p>You are low on money for the month.</div>";
 			}
-			if ($row['week_ac'] <= $row['warning_week']) {
+			if ($row['week_ac'] <= $row['warning_week'] && $row['week_ac'] > 0) {
 				$warning = "<div class='w3-panel w3-amber w3-card-4 w3-animate-opacity'> <span onclick='this.parentElement.style.display=`none`' class='w3-button w3-amber w3-panel w3-large w3-display-topright'>&times;</span><h3>Warning!</h3> <p>You are low on money for the week.</div>";
 			} 
 		
@@ -176,7 +174,7 @@
 					<br />
 					<div class = "">
 						<h3 class = "title"> Main Account </h3>
-						<h1>$<?php echo $money ?></h1>
+						<h1>$<?php echo round($money, 2) ?></h1>
 						<p></p>
 					</div>
 					<br />
@@ -194,7 +192,7 @@
 							echo "
 								<div class = 'box'>
 									<h3 class = 'title'>".$account['account_name']."</h3>
-									<h1>$".$account['amount']."<h1>
+									<h1>$".round($account['amount'], 2)."<h1>
 									<p style = 'font-size: x-small;'>".$linked."</p>
 								</div>
 								<br />";

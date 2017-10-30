@@ -32,7 +32,7 @@
 			<?php 
 					foreach ($act_e as $accounts) {
 						echo "<h1 class='w3-border'>".$accounts['account_name']."</h1>";
-						echo "<div class='w3-border'><h3><h3 class='w3-lime'>$".$accounts['amount']."</h3><div style='margin-left:5px;'><button onclick='javascript:window.location = (\"php/account_add-to.php?type=".$accounts['id']."\")' class=\"w3-button w3-teal\" style='margin-right: 5px;'>+ / -</button>";	
+						echo "<div class='w3-border'><h3><h3 class='w3-lime'>$".round($accounts['amount'], 2)."</h3><div style='margin-left:5px;'><button onclick='javascript:window.location = (\"php/account_add-to.php?type=".$accounts['id']."\")' class=\"w3-button w3-teal\" style='margin-right: 5px;'>+ / -</button>";	
 						if ($accounts['link_bud'] == 1) {
 							echo "<button onclick='javascript:window.location = (\"php/account_unlink.php?type=".$accounts['id']."\")' class=\"w3-button w3-teal\">Unlink</button>";
 							echo "<p style = 'font-size: x-small;'>Linked to primary account</p>";
@@ -42,7 +42,7 @@
 						}
 						echo "</h3></div></div> <br /><br />";
 					}
-								?>
+			?>
 				
 				<br /><br />
 				<div class='w3-container w3-center'>

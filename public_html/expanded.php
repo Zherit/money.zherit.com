@@ -21,10 +21,9 @@
 	$day = $row['day_ac'];
 	$week = $row['week_ac'];
 	$month = $row['month_ac'];
-	$use_cred = $row['use_cred'];
-	$credit = $row['credit'];
 	
-
+	$act_q = "SELECT id, account_name, amount, link_bud FROM accounts WHERE uid = " . $_SESSION['user']['id'];
+	$act_e = $dbc->query($act_q);
 ?>
 <html>
 	<head>
@@ -52,10 +51,17 @@
 					<h3>$<?php echo $month ?> &nbsp&nbsp<button onclick='javascript:window.location = ("php/add_to.php?type=month")' class="w3-button">+ / -</button></h3>
 					<br /><br />
 					<?php 
-					if ($use_cred == 1) {
-						echo "<h1>Credit</h1>";
-						echo "<h3>$". $credit ." &nbsp&nbsp<button onclick='javascript:window.location = (\"php/add_to.php?type=credit\")' class=\"w3-button\">+ / -</button></h3>";
-					}
+						
+						
+						foreach ($act_e as $accounts) {
+							if ($accounts['link_bud'] == 1) {
+								echo "<h1>".$accounts['account_name']."</h1>";
+								echo "<h3>$".round($accounts['amount'], 2)."&nbsp&nbsp<button onclick='javascript:window.location = (\"php/account_add-to.php?type=".$account['id']."\")' class=\"w3-button\">+ / -</button></h3>";
+							} else {
+							
+							}
+							
+						}
 					?>
 				</div>
 				<p>Note: The add/subtract button does not add to the permanent monthly/weekly/daily amount, just this month/day/week.</p>

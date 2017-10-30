@@ -28,7 +28,7 @@
 			} else {
 				$alert = '';
 			}
-			$amount = ($row['month_def'] - $row['month_ac']);
+			$amount = sqrt(pow(($row['month_def'] - $row['month_ac']), 2));
 			$query_params = array(
 								':uid' => $row['id'], 
 								':username' => $row['username'],
@@ -52,7 +52,7 @@
 			} else {
 				$alert = '';
 			}
-			$amount = ($row['week_def'] - $row['week_ac']);
+			$amount = sqrt(pow(($row['week_def'] - $row['week_ac']), 2));
 			$query_params = array(
 								':uid' => $row['id'], 
 								':username' => $row['username'],
@@ -76,7 +76,7 @@
 			} else {
 				$alert = '';
 			}
-			$amount = ($row['day_def'] - $row['day_ac']);
+			$amount = sqrt(pow(($row['day_def'] - $row['day_ac']), 2));
 			$query_params = array(
 								':uid' => $row['id'], 
 								':username' => $row['username'],

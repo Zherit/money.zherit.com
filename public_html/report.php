@@ -9,6 +9,12 @@
 	
 	$uid = $_SESSION['user']['id'];
 	
+	$query_a = "SELECT difference FROM `reports` WHERE `uid` = ".$uid." AND `type` = 'Daily'";
+	$result = $dbc->query($query_a);
+	$spent = 0; 
+	foreach($result as $thing) {
+		$spent = $spent + (sqrt(pow($thing['difference'], 2)));
+	}
 ?>
 <html>
 	<head>
@@ -18,11 +24,36 @@
 		<script src="//code.jquery.com/jquery-1.12.4.js"> </script>
 		<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js" > </script>
 		<script>
-		$(document).ready(function() {
-			$('#users').DataTable({
-				paging: false
-			});
-		} );
+		
+	$(document).ready(function() {
+		// DataTable
+		var table = $('#users').DataTable( {
+						"paging":   false
+					} );
+		table.columns(0).search("none" ).draw();
+		//Search
+		$('#week').on('click', function () {
+			table.columns(0).search("Weekly" ).draw();
+			document.getElementById("week").className = "w3-button w3-green";
+			document.getElementById("day").className = "w3-button w3-blue";
+			document.getElementById("month").className = "w3-button w3-blue";
+			
+		}); 
+		$('#day').on('click', function () {
+			table.columns(0).search("Daily" ).draw();
+			document.getElementById("day").className = "w3-button w3-green";
+			document.getElementById("week").className = "w3-button w3-blue";
+			document.getElementById("month").className = "w3-button w3-blue";
+		}); 
+		$('#month').on('click', function () {
+			table.columns(0).search("Monthly" ).draw();
+			document.getElementById("month").className = "w3-button w3-green";
+			document.getElementById("day").className = "w3-button w3-blue";
+			document.getElementById("week").className = "w3-button w3-blue";
+		}); 
+		
+	} );
+		
 	</script>
 		
 		
@@ -30,12 +61,14 @@
 	<body>
 		<div class="w3-card-4" style = "width: 620px; margin: auto; margin-top: 10px;">
 			<div class='w3-container w3-blue'>
-				<h1>Reports for UID: <?php echo $uid; ?></h1>
-				<button onclick="table.search('Daily'); draw();"	class='w3-button'>Daily</button><button onclick="table.search('Weekly'); draw();" class='w3-button'>Weekly</button><button onclick="table.search('Monthly'); draw();" class='w3-button'>Monthly</button>
+				<div style = "text-align: center;">
+					<h1>Reports for UID: <?php echo $uid; ?></h1>
+					<h5>Total Spent: $<?php echo $spent ?> (Excluding Today)</h5>
+				</div>
+				<br />
 			</div>
 			<div class="w3-container" style = "text-align: left;">
-			
-				<br /><br />
+		<button id='day' class='w3-button w3-blue'>Daily</button><button id='week' class='w3-button w3-blue'>Weekly</button><button id='month' class='w3-button w3-blue'>Monthly</button>
 				<table id = "users" class = "display" style="margin-bottom: 10px; margin-top: 10px;">
 					<thead>
 						<tr>
@@ -57,6 +90,7 @@
 					</tfoot>
 					
 				<tbody>	
+				
 				<?php
 					$query = "SELECT type, amount, alert, difference, date FROM reports WHERE uid = " . $uid;
 					$execute = $dbc->query($query);
@@ -74,8 +108,10 @@
 						</tr>";
 					}
 				?>
+				
 				</tbody>
 				</table>
+				
 			</div>
 			<br /><br />
 		</div>
