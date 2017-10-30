@@ -75,6 +75,8 @@
 	}
 	
 	if ($form == "noForm") {
+		echo "NO FORM";
+		echo $form;
 		if ($type == "main") {
 			if ($budget == 0) {
 				$query = "UPDATE money SET money = (money + :spent) WHERE id = :uid";
@@ -148,6 +150,7 @@
 			}
 		}
 	} else {
+		echo $form;
 		$row = unserialize($_POST['therow']);
 		if ($_POST['reset'] == "day") {
 			$query = "UPDATE money SET day_ac = (day_ac + :spent) WHERE id = :uid";
@@ -182,6 +185,13 @@
 		} else {
 			echo "Invalid Entry";
 		}
+		
+		
+		
+		
+		
+		/* IF THE POST WAS NOT EMPTY */
+		echo "WE REACHED THIS POINT";
 	}
 
 	
@@ -200,7 +210,7 @@
 		<div id="content">
 			<div class='content'>
 				<div>
-					<form method="post" action="undo.php">
+					<form method="post" action="undo_new.php">
 						<h1>Undo Expendature</h1>
 						<p>Because this expendature was not made today you will need to select where you would like the money to be added to when undone</p>
 						<input type='hidden' name='resetting' value='yes'>

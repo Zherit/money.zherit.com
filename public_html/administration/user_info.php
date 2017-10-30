@@ -38,7 +38,7 @@
 		
 	</head>
 	<body>
-		<div class="w3-card-4" style = "width: 800px; margin: auto; margin-top: 10px;">
+		<div class="w3-card-4" style = "width: 1125px; margin: auto; margin-top: 10px;">
 			<div class='w3-container w3-blue'>
 				<h1>Transations for UID: <?php echo $_GET['user_id']; ?></h1>
 			</div>
